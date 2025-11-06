@@ -1,1 +1,1 @@
-# Jewellerys
+# Jewellery

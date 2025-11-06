@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - STACKLY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
+        }
+
+        body {
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Top bar */
+        .top-bar {
+            background-color: #f8f0e5;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8c6d46;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #b8860b;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        /* Nav links */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: 0.3s ease;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #b8860b;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background-color: #b8860b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+            padding-left: 25px;
+        }
+
+        .dropdown i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Icons */
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            position: relative;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons i:hover {
+            color: #b8860b;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #b8860b;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Cart Notification */
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #b8860b;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .cart-notification.show {
+            display: flex;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        /* Collections Section */
+        .collections {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #b8860b;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #b8860b;
+            color: white;
+            border-color: #b8860b;
+        }
+
+        .sort-options select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        /* Collection Grid */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .collection-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .collection-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .collection-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #b8860b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        .collection-info {
+            padding: 20px;
+        }
+
+        .collection-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .collection-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #b8860b;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .collection-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .add-to-cart {
+            background-color: #b8860b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #a0780a;
+        }
+
+        .wishlist {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .wishlist:hover {
+            background-color: #f8f0e5;
+            border-color: #b8860b;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: #b8860b;
+            color: white;
+            border-color: #b8860b;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #b8860b;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #b8860b;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons i {
+            font-size: 1.2rem;
+            color: #ccc;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            color: #b8860b;
+        }
+
+        .newsletter input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            /* Dropdown adjustments for mobile */
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: transparent;
+                padding-left: 20px;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content a {
+                padding: 8px 0;
+                border-bottom: none;
+                font-size: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+   <header>
+        <div class="top-bar">
+            Free shipping on orders over ₹500 | Complimentary gift wrapping
+        </div>
+        <nav class="navbar">
+            <a href="index.html" class="logo">STACKLY</a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html">Home <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="./index.html">Home Page 1</a>
+                        <a href="./home2.html">Home Page 2</a>
+                    </div>
+                </li>
+                <li><a href="./collections.html" class="active">Collections</a></li>
+                <li><a href="./bridal.html">Bridal</a></li>
+                <li><a href="./engagement.html">Engagement</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="./404.html"><i class="fas fa-search"></i></a>
+                <a href="./login.html"><i class="fas fa-user"></i></a>
+                <a href="./cart.html" style="position: relative;">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Item added to cart!</span>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div>
+            <h1>Our Collections</h1>
+            <p>Discover our exquisite range of wedding jewellery, meticulously crafted to celebrate your special moments</p>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="collections">
+        <h2 class="section-title">RIVAAH Collection</h2>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="necklaces">Necklaces</button>
+                <button class="filter-btn" data-filter="earrings">Earrings</button>
+                <button class="filter-btn" data-filter="bracelets">Bracelets</button>
+                <button class="filter-btn" data-filter="rings">Rings</button>
+                <button class="filter-btn" data-filter="bridal-sets">Bridal Sets</button>
+            </div>
+            <div class="sort-options">
+                <select id="sortSelect">
+                    <option value="featured">Sort by: Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Collection Grid -->
+        <div class="collection-grid" id="collectionGrid">
+            <!-- Product 1 -->
+            <div class="collection-card" data-category="necklaces">
+                <div class="collection-badge">Bestseller</div>
+                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Eternal Love Necklace" class="collection-img">
+                <div class="collection-info">
+                    <h3>Eternal Love Necklace</h3>
+                    <p>Exquisite diamond necklace for your special day</p>
+                    <div class="price">&#8377;1,250.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="301" data-name="Eternal Love Necklace" data-price="1250.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="collection-card" data-category="earrings">
+                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Pearl Drop Earrings" class="collection-img">
+                <div class="collection-info">
+                    <h3>Pearl Drop Earrings</h3>
+                    <p>Elegant pearl earrings with diamond accents</p>
+                    <div class="price">&#8377;680.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="302" data-name="Pearl Drop Earrings" data-price="680.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="collection-card" data-category="bracelets">
+                <div class="collection-badge">New</div>
+                <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Golden Harmony Bracelet" class="collection-img">
+                <div class="collection-info">
+                    <h3>Golden Harmony Bracelet</h3>
+                    <p>Intricately designed gold bracelet with precious stones</p>
+                    <div class="price">&#8377;950.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="303" data-name="Golden Harmony Bracelet" data-price="950.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="collection-card" data-category="rings">
+                <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Diamond Solitaire Ring" class="collection-img">
+                <div class="collection-info">
+                    <h3>Diamond Solitaire Ring</h3>
+                    <p>Classic solitaire ring with brilliant cut diamond</p>
+                    <div class="price">&#8377;1,850.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="304" data-name="Diamond Solitaire Ring" data-price="1850.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="collection-card" data-category="earrings">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Rose Gold Earrings" class="collection-img">
+                <div class="collection-info">
+                    <h3>Rose Gold Earrings</h3>
+                    <p>Delicate rose gold earrings with pearl details</p>
+                    <div class="price">&#8377;520.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="305" data-name="Rose Gold Earrings" data-price="520.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="collection-card" data-category="bracelets">
+                <div class="collection-badge">Limited</div>
+                <img src="https://images.unsplash.com/photo-1588444650700-6c7f0c89d36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Platinum Bracelet" class="collection-img">
+                <div class="collection-info">
+                    <h3>Platinum Bracelet</h3>
+                    <p>Luxurious platinum bracelet with diamond inlays</p>
+                    <div class="price">&#8377;2,350.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="306" data-name="Platinum Bracelet" data-price="2350.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="collection-card" data-category="bridal-sets">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Royal Necklace Set" class="collection-img">
+                <div class="collection-info">
+                    <h3>Royal Necklace Set</h3>
+                    <p>Complete bridal set with necklace and matching earrings</p>
+                    <div class="price">&#8377;3,200.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="307" data-name="Royal Necklace Set" data-price="3200.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="collection-card" data-category="necklaces">
+                <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Vintage Pearl Collection" class="collection-img">
+                <div class="collection-info">
+                    <h3>Vintage Pearl Collection</h3>
+                    <p>Timeless pearl jewellery with vintage-inspired design</p>
+                    <div class="price">&#8377;1,750.00</div>
+                    <div class="collection-actions">
+                        <button class="add-to-cart" data-id="308" data-name="Vintage Pearl Collection" data-price="1750.00">Add to Cart</button>
+                        <button class="wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="pagination-btn active">1</div>
+            <div class="pagination-btn">2</div>
+            <div class="pagination-btn">3</div>
+            <div class="pagination-btn">4</div>
+            <div class="pagination-btn">></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>STACKLY</h3>
+                <p>Creating timeless jewellery for your most precious moments since 1990.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-pinterest"></i>
+                    <i class="fab fa-twitter"></i>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Necklaces</a></li>
+                    <li><a href="#">Earrings</a></li>
+                    <li><a href="#">Bracelets</a></li>
+                    <li><a href="#">Rings</a></li>
+                    <li><a href="#">Bridal Sets</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Care Instructions</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive updates on new collections and special offers.</p>
+                <div class="newsletter">
+                    <input type="email" placeholder="Your email address">
+                    <button class="add-to-cart">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 STACKLY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        const cartCount = document.querySelector('.cart-count');
+        const cartNotification = document.getElementById('cartNotification');
+        const notificationText = document.getElementById('notificationText');
+
+        // Initialize cart from localStorage
+        function initCart() {
+            const savedCart = localStorage.getItem('stacklyCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('stacklyCart', JSON.stringify(cart));
+        }
+
+        // Update cart count in header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Show cart notification
+        function showNotification(productName) {
+            notificationText.textContent = `${productName} added to cart!`;
+            cartNotification.classList.add('show');
+            
+            setTimeout(() => {
+                cartNotification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add item to cart
+        function addToCart(productId, productName, productPrice) {
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartCount();
+            showNotification(productName);
+        }
+
+        // Filter functionality
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.collection-card');
+            
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Sort functionality
+        function sortProducts(sortType) {
+            const grid = document.getElementById('collectionGrid');
+            const products = Array.from(grid.querySelectorAll('.collection-card'));
+            
+            products.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector('.price').textContent.replace('₹', '').replace(',', ''));
+                const priceB = parseFloat(b.querySelector('.price').textContent.replace('₹', '').replace(',', ''));
+                
+                switch(sortType) {
+                    case 'price-low':
+                        return priceA - priceB;
+                    case 'price-high':
+                        return priceB - priceA;
+                    case 'newest':
+                        // For demo, we'll sort by presence of "new" badge
+                        const isANew = a.querySelector('.collection-badge')?.textContent === 'New';
+                        const isBNew = b.querySelector('.collection-badge')?.textContent === 'New';
+                        return isBNew - isANew;
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted products
+            products.forEach(product => grid.appendChild(product));
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+            dropdownToggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking on a link (non-dropdown)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                // Only close the menu if it's not a dropdown toggle
+                if (!this.parentElement.classList.contains('dropdown')) {
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Filter products
+                const category = this.dataset.filter;
+                filterProducts(category);
+            });
+        });
+
+        // Sort functionality
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            sortProducts(this.value);
+        });
+
+        // Wishlist buttons functionality
+        const wishlistButtons = document.querySelectorAll('.wishlist');
+        wishlistButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const heartIcon = this.querySelector('i');
+                if (heartIcon.classList.contains('far')) {
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas');
+                    heartIcon.style.color = '#b8860b';
+                } else {
+                    heartIcon.classList.remove('fas');
+                    heartIcon.classList.add('far');
+                    heartIcon.style.color = '';
+                }
+            });
+        });
+
+        // Add to cart buttons functionality
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-name');
+                const productPrice = this.getAttribute('data-price');
+                
+                addToCart(productId, productName, productPrice);
+                
+                // Add visual feedback
+                const originalText = this.textContent;
+                this.textContent = 'Added!';
+                this.style.backgroundColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.backgroundColor = '';
+                }, 1500);
+            });
+        });
+
+        // Initialize cart when page loads
+        document.addEventListener('DOMContentLoaded', initCart);
+    </script>
+</body>
+</html>

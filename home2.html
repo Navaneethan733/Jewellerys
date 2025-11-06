@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STACKLY - Wedding Jewellery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
+        }
+
+        body {
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: transparent;
+            color: #b8860b;
+            border: 2px solid #b8860b;
+            border-radius: 2px;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 20px auto 0;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /* Header Styles */
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Top bar */
+        .top-bar {
+            background-color: #f8f0e5;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8c6d46;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #b8860b;
+            text-decoration: none;
+            letter-spacing: 2px;
+            z-index: 1002;
+        }
+
+        /* Nav links */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: 0.3s ease;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #b8860b;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background-color: #b8860b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+            padding-left: 25px;
+        }
+
+        .dropdown-content a:hover::after {
+            width: 0;
+        }
+
+        .dropdown i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .dropdown:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Icons */
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            z-index: 1002;
+        }
+
+        .nav-icons a {
+            position: relative;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons i:hover {
+            color: #b8860b;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #b8860b;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #333;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        /* Hero Section with Video Background */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .hero-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-family: 'Raleway', sans-serif;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-content strong {
+            color: #b8860b;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        /* New Arrivals Section */
+        .new-arrivals {
+            background-color: #f8f8f8;
+        }
+
+        .arrivals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .arrival-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .arrival-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrival-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #B76E79;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .arrival-image {
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .arrival-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .arrival-card:hover .arrival-image img {
+            transform: scale(1.1);
+        }
+
+        .arrival-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .arrival-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .arrival-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .arrival-price {
+            font-size: 1.2rem;
+            color: #b8860b;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Bridal Collection */
+        .bridal-collection {
+            background-color: #fdfaf6;
+            position: relative;
+        }
+
+        .bridal-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .bridal-text {
+            flex: 1;
+        }
+
+        .bridal-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .bridal-text p {
+            margin-bottom: 20px;
+            color: #666;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .bridal-features {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(184, 134, 11, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #b8860b;
+            font-size: 1.5rem;
+        }
+
+        .feature h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .bridal-image {
+            flex: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .bridal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Lookbook Section */
+        .lookbook {
+            background-color: #f8f8f8;
+        }
+
+        .lookbook-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .lookbook-item {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .lookbook-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .lookbook-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .lookbook-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 30px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .lookbook-item:hover .lookbook-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .lookbook-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .lookbook-overlay p {
+            font-family: 'Raleway', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: #fdfaf6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(184, 134, 11, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #b8860b;
+            font-size: 1.8rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 120px 0;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 400;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .cta .btn {
+            border-color: white;
+            color: white;
+        }
+
+        .cta .btn:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            padding: 80px 0 20px;
+            color: white;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #b8860b;
+            font-weight: 400;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 1px;
+            background-color: #b8860b;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .footer-links a:hover {
+            color: #b8860b;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(184, 134, 11, 0.1);
+            border-radius: 50%;
+            color: #b8860b;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .newsletter {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            color: white;
+            outline: none;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .newsletter button {
+            padding: 0 20px;
+            background-color: #b8860b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+        }
+
+        .newsletter button:hover {
+            background-color: #a0780a;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #aaa;
+            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
+            .bridal-content {
+                flex-direction: column;
+            }
+            
+            .bridal-image {
+                order: -1;
+            }
+            
+            .lookbook-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Navigation */
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+                text-align: center;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 0;
+                display: block;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .navbar {
+                padding: 15px 0;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 250px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .bridal-features {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .feature {
+                flex: 1 1 150px;
+            }
+            
+            /* Mobile Dropdown */
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: transparent;
+                padding: 0;
+                margin-left: 20px;
+            }
+
+            .dropdown-content a {
+                padding: 8px 0;
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 70px 0;
+            }
+            
+            .hero {
+                padding: 100px 0 60px;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .arrival-card, .service-card {
+                padding: 20px;
+            }
+            
+            .cta h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* 425px Media Query */
+        @media (max-width: 425px) {
+            /* Header and Navigation */
+            .navbar {
+                padding: 10px 15px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .top-bar {
+                font-size: 0.8rem;
+                padding: 6px 0;
+            }
+            
+            .nav-links.active, .nav-icons.active {
+                padding: 15px;
+            }
+            
+            .nav-links.active li {
+                margin: 8px 0;
+            }
+            
+            .nav-links.active a {
+                padding: 8px 0;
+                font-size: 0.9rem;
+            }
+            
+            /* Hero Section */
+            .hero {
+                padding-top: 70px;
+                height: auto;
+                min-height: 80vh;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.3rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 20px;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: none;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            /* Sections */
+            section {
+                padding: 50px 0;
+            }
+            
+            .section-title {
+                margin-bottom: 40px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title p {
+                font-size: 0.9rem;
+                padding: 0 15px;
+            }
+            
+            /* New Arrivals */
+            .arrivals-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .arrival-card {
+                margin: 0 10px;
+            }
+            
+            .arrival-image {
+                height: 250px;
+            }
+            
+            .arrival-info {
+                padding: 20px 15px;
+            }
+            
+            .arrival-info h3 {
+                font-size: 1.3rem;
+            }
+            
+            .arrival-price {
+                font-size: 1.1rem;
+            }
+            
+            /* Bridal Collection */
+            .bridal-content {
+                gap: 30px;
+            }
+            
+            .bridal-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .bridal-text p {
+                font-size: 0.9rem;
+            }
+            
+            .bridal-features {
+                flex-direction: column;
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .feature {
+                flex: none;
+            }
+            
+            .bridal-image {
+                height: 300px;
+            }
+            
+            /* Lookbook */
+            .lookbook-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .lookbook-item {
+                height: 350px;
+                margin: 0 10px;
+            }
+            
+            .lookbook-overlay {
+                padding: 20px;
+            }
+            
+            .lookbook-overlay h3 {
+                font-size: 1.3rem;
+            }
+            
+            /* Services */
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service-card {
+                padding: 30px 20px;
+                margin: 0 10px;
+            }
+            
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .service-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            /* CTA Section */
+            .cta {
+                padding: 70px 0;
+            }
+            
+            .cta h2 {
+                font-size: 1.8rem;
+                padding: 0 15px;
+            }
+            
+            .cta p {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+            
+            /* Footer */
+            footer {
+                padding: 50px 0 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .footer-column {
+                text-align: center;
+            }
+            
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+            
+            .newsletter {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter input {
+                padding: 10px 15px;
+            }
+            
+            .newsletter button {
+                padding: 10px 20px;
+            }
+            
+            .copyright {
+                padding-top: 20px;
+                font-size: 0.8rem;
+            }
+            
+            /* Utility Classes */
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            Free shipping on orders over ₹500 | Complimentary gift wrapping
+        </div>
+        <nav class="navbar">
+            <a href="index.html" class="logo">STACKLY</a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html" class="active">Home <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="./index.html">Home Page 1</a>
+                        <a href="./home2.html">Home Page 2</a>
+                    </div>
+                </li>
+                <li><a href="./collections.html">Collections</a></li>
+                <li><a href="./bridal.html">Bridal</a></li>
+                <li><a href="./engagement.html">Engagement</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="./login.html"><i class="fas fa-user"></i></a>
+                <a href="./addtocart.html" style="position: relative;">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero">
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="./image/6036050_Wedding_Person_1920x1080 (1).mp4" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Fallback background">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>STACKLY</h1>
+                <h2>For marriages crafted by you</h2>
+                <p>PRESENTS <strong>RIVAAH</strong> WEDDING JEWELLERY</p>
+                <div class="hero-buttons">
+                    <a href="./collections.html" class="btn btn-filled">EXPLORE NOW</a>
+                    <a href="./collections.html" class="btn">VIEW COLLECTIONS</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals">
+        <div class="container">
+            <div class="section-title">
+                <h2>New Arrivals</h2>
+                <p>Discover our latest creations, designed to make your special day even more memorable</p>
+            </div>
+            <div class="arrivals-grid">
+                <div class="arrival-card">
+                    <div class="arrival-badge">Bestseller</div>
+                    <div class="arrival-image">
+                        <!-- Placeholder for product image -->
+                        <div style="width:100%; height:100%; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#b8860b;">
+                            <i class="fas fa-ring" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                    <div class="arrival-info">
+                        <h3>Eternity Diamond Ring</h3>
+                        <p>18K white gold with brilliant cut diamonds</p>
+                        <div class="arrival-price">&#8377;2,850.00</div>
+                        <a href="./404.html" class="btn">View Details</a>
+                    </div>
+                </div>
+                <div class="arrival-card">
+                    <div class="arrival-badge">New</div>
+                    <div class="arrival-image">
+                        <!-- Placeholder for product image -->
+                        <div style="width:100%; height:100%; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#B76E79;">
+                            <i class="fas fa-gem" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                    <div class="arrival-info">
+                        <h3>Sapphire Drop Earrings</h3>
+                        <p>Blue sapphires set in rose gold</p>
+                        <div class="arrival-price">&#8377;1,650.00</div>
+                        <a href="./404.html" class="btn">View Details</a>
+                    </div>
+                </div>
+                <div class="arrival-card">
+                    <div class="arrival-image">
+                        <!-- Placeholder for product image -->
+                        <div style="width:100%; height:100%; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#C0C0C0;">
+                            <i class="fas fa-necklace" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                    <div class="arrival-info">
+                        <h3>Pearl Strand Necklace</h3>
+                        <p>Freshwater pearls with diamond clasp</p>
+                        <div class="arrival-price">&#8377;1,250.00</div>
+                        <a href="./404.html" class="btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bridal Collection -->
+    <section class="bridal-collection">
+        <div class="container">
+            <div class="bridal-content">
+                <div class="bridal-text">
+                    <h2>The Bridal Collection</h2>
+                    <p>Our exclusive RIVAAH collection is designed for the modern bride who values both tradition and contemporary elegance. Each piece tells a story of love, commitment, and the beginning of a new journey.</p>
+                    <p>From intricate necklaces to statement earrings, our bridal collection offers a perfect blend of craftsmanship and design that will make you feel truly special on your wedding day.</p>
+                    <div class="bridal-features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <h4>Premium Quality</h4>
+                            <p>Ethically sourced gemstones</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-hands"></i>
+                            </div>
+                            <h4>Handcrafted</h4>
+                            <p>By master artisans</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4>Certified</h4>
+                            <p>Quality assurance</p>
+                        </div>
+                    </div>
+                    <a href="./404.html" class="btn btn-filled" style="margin-top: 30px;">Explore Bridal Collection</a>
+                </div>
+                <div class="bridal-image">
+                    <!-- Placeholder for bridal image -->
+                    <div style="width:100%; height:500px; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#b8860b;">
+                        <i class="fas fa-heart" style="font-size: 5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lookbook Section -->
+    <section class="lookbook">
+        <div class="container">
+            <div class="section-title">
+                <h2>Style Lookbook</h2>
+                <p>Get inspired by how our customers style their STACKLY jewellery</p>
+            </div>
+            <div class="lookbook-grid">
+                <div class="lookbook-item">
+                    <!-- Placeholder for lookbook image -->
+                    <div style="width:100%; height:100%; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#b8860b;">
+                        <i class="fas fa-crown" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="lookbook-overlay">
+                        <h3>Traditional Elegance</h3>
+                        <p>Classic pieces for traditional ceremonies</p>
+                        <a href="./bridal.html" class="btn">View Style</a>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <!-- Placeholder for lookbook image -->
+                    <div style="width:100%; height:100%; background:linear-gradient(45deg, #f9f5f0, #e8dfd3); display:flex; align-items:center; justify-content:center; color:#B76E79;">
+                        <i class="fas fa-star" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="lookbook-overlay">
+                        <h3>Modern Romance</h3>
+                        <p>Contemporary designs for the modern bride</p>
+                        <a href="./engagement.html" class="btn">View Style</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>We offer more than just jewellery - we provide an exceptional experience</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <h3>Custom Design</h3>
+                    <p>Work with our designers to create a unique piece that tells your story</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Stone Selection</h3>
+                    <p>Choose from our curated collection of ethically sourced gemstones</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Gift Wrapping</h3>
+                    <p>Complimentary luxury gift wrapping for all your purchases</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Lifetime Care</h3>
+                    <p>Professional cleaning and maintenance services for your jewellery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Begin Your Journey With Us</h2>
+            <p>Schedule a consultation with our jewellery experts to find the perfect pieces for your wedding</p>
+            <a href="./contact.html" class="btn">Book Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>STACKLY</h3>
+                    <p>Creating timeless jewellery for your most precious moments since 1990.</p>
+                    <div class="social-icons">
+                        <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="./404.html"><i class="fab fa-instagram"></i></a>
+                        <a href="./404.html"><i class="fab fa-pinterest"></i></a>
+                        <a href="./404.html"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="./collections.html">Necklaces</a></li>
+                        <li><a href="./collections.html">Earrings</a></li>
+                        <li><a href="./collections.html">Bracelets</a></li>
+                        <li><a href="./collections.html">Rings</a></li>
+                        <li><a href="./collections.html">Bridal Sets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./404.html">Shipping & Returns</a></li>
+                        <li><a href="./contact.html">FAQ</a></li>
+                        <li><a href="./404.html">Size Guide</a></li>
+                        <li><a href="./404.html">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive updates on new collections and special offers.</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Your email address">
+                        <button>Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 STACKLY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            // Toggle between hamburger and close icon
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                // Reset menu icon to hamburger
+                const menuToggle = document.querySelector('.menu-toggle i');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+            });
+        });
+
+        // Mobile dropdown toggle
+        dropdowns.forEach(dropdown => {
+            const dropdownToggle = dropdown.querySelector('a');
+            
+            dropdownToggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close menu when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+                    navLinks.classList.remove('active');
+                    // Reset menu icon to hamburger
+                    const menuToggle = document.querySelector('.menu-toggle i');
+                    menuToggle.classList.remove('fa-times');
+                    menuToggle.classList.add('fa-bars');
+                    
+                    // Close any open dropdowns
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                // Reset menu icon to hamburger
+                const menuToggle = document.querySelector('.menu-toggle i');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+                
+                // Close any open dropdowns
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Video fallback handling
+        const video = document.querySelector('.video-background video');
+        if (video) {
+            video.addEventListener('error', function() {
+                // If video fails to load, show fallback image
+                const videoContainer = document.querySelector('.video-background');
+                videoContainer.innerHTML = '<div style="width:100%; height:100%; background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80) center/cover;"></div>';
+            });
+        }
+    </script>
+</body>
+</html>
