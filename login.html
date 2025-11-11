@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - STACKLY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add missing fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Base Styles */
         * {
@@ -95,6 +97,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
+            position: relative;
         }
 
         .logo {
@@ -189,6 +192,10 @@
         .nav-icons {
             display: flex;
             gap: 20px;
+        }
+
+        .nav-icons a {
+            text-decoration: none;
         }
 
         .nav-icons i {
@@ -415,6 +422,7 @@
 
         .social-btn {
             flex: 1;
+            text-decoration: none;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -516,6 +524,10 @@
             margin-top: 20px;
         }
 
+        .social-icons a {
+            text-decoration: none;
+        }
+
         .social-icons i {
             display: flex;
             align-items: center;
@@ -575,13 +587,62 @@
             font-family: 'Raleway', sans-serif;
         }
 
+        /* Error message styling */
+        .error-message {
+            color: #d9534f;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .form-group.error .form-control {
+            border-color: #d9534f;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .mobile-menu .nav-links li {
+            margin: 10px 0;
+        }
+
+        .mobile-menu .nav-icons {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .navbar {
                 padding: 15px 0;
             }
             
-            .nav-links, .nav-icons {
+            .nav-links, .nav-icons:not(.mobile-nav-icons) {
                 display: none;
             }
             
@@ -658,6 +719,21 @@
                 <i class="fas fa-bars"></i>
             </div>
         </nav>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="nav-links">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./collections.html">Collections</a></li>
+                <li><a href="./bridal.html">Bridal</a></li>
+                <li><a href="./engagement.html">Engagement</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons mobile-nav-icons">
+                <a href="./login.html"><i class="fas fa-user"></i></a>
+                <a href="./addtocart.html"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
     </header>
 
     <!-- Login Section -->
@@ -670,7 +746,7 @@
                     </div>
                     <h2>Welcome Back</h2>
                     <p>Access your STACKLY account to manage your orders, wishlist, and personal preferences.</p>
-                    <div class="btn" style="border-color: white; color: white;">New to STACKLY?</div>
+                    <a href="./signup.html"><div class="btn" style="border-color: white; color: white;">New to STACKLY?</div></a>
                 </div>
             </div>
             <div class="login-form">
@@ -680,19 +756,21 @@
                 </div>
                 
                 <form id="loginForm">
-                    <div class="form-group">
+                    <div class="form-group" id="emailGroup">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" id="passwordGroup">
                         <label for="password">Password</label>
                         <div class="password-input">
                             <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
-                            <button type="button" class="toggle-password" id="togglePassword">
+                            <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
                     </div>
                     
                     <div class="form-options">
@@ -700,7 +778,7 @@
                             <input type="checkbox" id="remember">
                             <label for="remember">Remember me</label>
                         </div>
-                        <a href="./404.html" class="forgot-password">Forgot Password?</a>
+                        <a href="./forgot-password.html" class="forgot-password">Forgot Password?</a>
                     </div>
                     
                     <button type="submit" class="login-button">Sign In</button>
@@ -711,14 +789,14 @@
                 </div>
                 
                 <div class="social-login">
-                    <button class="social-btn google">
-                       <a href="./404.html"><i class="fab fa-google"></i></a>
+                    <a href="#" class="social-btn google" id="googleLogin">
+                        <i class="fab fa-google"></i>
                         <span>Google</span>
-                    </button>
-                    <button class="social-btn facebook">
-                        <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                    </a>
+                    <a href="#" class="social-btn facebook" id="facebookLogin">
+                        <i class="fab fa-facebook-f"></i>
                         <span>Facebook</span>
-                    </button>
+                    </a>
                 </div>
                 
                 <div class="register-link">
@@ -736,38 +814,38 @@
                     <h3>STACKLY</h3>
                     <p>Creating timeless jewellery for your most precious moments since 1990.</p>
                     <div class="social-icons">
-                        <i class="fab fa-facebook-f"></i>
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-pinterest"></i>
-                        <i class="fab fa-twitter"></i>
+                        <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://pinterest.com" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
                     <h3>Shop</h3>
                     <ul class="footer-links">
-                        <li><a href="./404.html">Necklaces</a></li>
-                        <li><a href="./404.html">Earrings</a></li>
-                        <li><a href="./404.html">Bracelets</a></li>
-                        <li><a href="./404.html">Rings</a></li>
-                        <li><a href="./404.html">Bridal Sets</a></li>
+                        <li><a href="./collections.html">Necklaces</a></li>
+                        <li><a href="./collections.html">Earrings</a></li>
+                        <li><a href="./collections.html">Bracelets</a></li>
+                        <li><a href="./collections.html">Rings</a></li>
+                        <li><a href="./bridal.html">Bridal Sets</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Customer Service</h3>
                     <ul class="footer-links">
-                        <li><a href="./404.html">Contact Us</a></li>
-                        <li><a href="./404.html">Shipping & Returns</a></li>
-                        <li><a href="./404.html">FAQ</a></li>
-                        <li><a href="./404.html">Size Guide</a></li>
-                        <li><a href="./404.html">Care Instructions</a></li>
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./shipping.html">Shipping & Returns</a></li>
+                        <li><a href="./faq.html">FAQ</a></li>
+                        <li><a href="./size-guide.html">Size Guide</a></li>
+                        <li><a href="./care.html">Care Instructions</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Newsletter</h3>
                     <p>Subscribe to receive updates on new collections and special offers.</p>
                     <div class="newsletter">
-                        <input type="email" placeholder="Your email address">
-                        <button>Subscribe</button>
+                        <input type="email" placeholder="Your email address" id="newsletterEmail">
+                       <a href="./404.html"><button type="button" class="subscribe-btn">Subscribe</button></a>
                     </div>
                 </div>
             </div>
@@ -780,8 +858,18 @@
     <script>
         // Mobile menu toggle
         document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-            document.querySelector('.nav-icons').classList.toggle('active');
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+            
+            // Toggle menu icon
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
         // Toggle password visibility
@@ -803,6 +891,28 @@
             }
         });
 
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.parentElement.classList.add('error');
+        }
+
+        function clearError(elementId) {
+            const element = document.getElementById(elementId);
+            element.textContent = '';
+            element.parentElement.classList.remove('error');
+        }
+
         // Form submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -810,29 +920,74 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // Simple validation
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
+            let isValid = true;
+            
+            // Email validation
+            if (!email) {
+                showError('emailError', 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('emailError', 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                clearError('emailError');
             }
             
-            // In a real application, you would send this data to a server
-            console.log('Login attempt:', { email, password });
+            // Password validation
+            if (!password) {
+                showError('passwordError', 'Password is required');
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                showError('passwordError', 'Password must be at least 6 characters');
+                isValid = false;
+            } else {
+                clearError('passwordError');
+            }
             
-            // Simulate successful login
-            alert('Login successful! Redirecting...');
-            
-            // Redirect to account page or previous page
-            // window.location.href = './account.html';
+            if (isValid) {
+                // In a real application, you would send this data to a server
+                console.log('Login attempt:', { email, password });
+                
+                // Simulate successful login
+                alert('Login successful! Redirecting...');
+                
+                // Redirect to account page or previous page
+                // window.location.href = './account.html';
+            }
         });
 
         // Social login buttons
-        document.querySelectorAll('.social-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const platform = this.classList.contains('google') ? 'Google' : 'Facebook';
-                alert(`Redirecting to ${platform} authentication...`);
-                // In a real application, you would redirect to OAuth flow
-            });
+        document.getElementById('googleLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Redirecting to Google authentication...');
+            // In a real application, you would redirect to OAuth flow
+        });
+
+        document.getElementById('facebookLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Redirecting to Facebook authentication...');
+            // In a real application, you would redirect to OAuth flow
+        });
+
+        // Newsletter subscription
+        document.querySelector('.subscribe-btn').addEventListener('click', function() {
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value;
+            
+            if (email && validateEmail(email)) {
+                alert('Thank you for subscribing to our newsletter!');
+                emailInput.value = '';
+            } else {
+                alert('Please enter a valid email address');
+            }
+        });
+
+        // Prevent form submission when pressing Enter in newsletter input
+        document.getElementById('newsletterEmail').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.querySelector('.subscribe-btn').click();
+            }
         });
     </script>
 </body>

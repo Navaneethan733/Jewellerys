@@ -340,6 +340,23 @@ section {
     font-weight: 600;
 }
 
+.subscribe {    
+    display: inline-block;
+    padding: 14px 32px;
+    height: 45px;
+    background-color: var(--gold);
+    color: var(--dark);
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Raleway', sans-serif;
+}
+
 .cta-button {
     display: inline-block;
     padding: 14px 32px;

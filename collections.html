@@ -508,6 +508,30 @@
             border-radius: 5px;
         }
 
+        /* Fixed Subscribe Button */
+        .subscribe {    
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #b8860b;
+            color: #333;
+            border: 2px solid #b8860b;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            width: 100%;
+            text-align: center;
+        }
+
+        .subscribe:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
         .copyright {
             text-align: center;
             padding-top: 30px;
@@ -579,6 +603,38 @@
             .filter-section {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+        }
+
+        /* Additional responsive styles for better mobile experience */
+        @media (max-width: 576px) {
+            .page-header {
+                height: 40vh;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .collection-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-options {
+                justify-content: center;
+            }
+            
+            .filter-btn {
+                padding: 6px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -733,7 +789,7 @@
             <!-- Product 6 -->
             <div class="collection-card" data-category="bracelets">
                 <div class="collection-badge">Limited</div>
-                <img src="https://images.unsplash.com/photo-1588444650700-6c7f0c89d36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Platinum Bracelet" class="collection-img">
+                <img src="./image/gold bracelet.avif" alt="Platinum Bracelet" class="collection-img">
                 <div class="collection-info">
                     <h3>Platinum Bracelet</h3>
                     <p>Luxurious platinum bracelet with diamond inlays</p>
@@ -791,30 +847,30 @@
                 <h3>STACKLY</h3>
                 <p>Creating timeless jewellery for your most precious moments since 1990.</p>
                 <div class="social-icons">
-                    <i class="fab fa-facebook-f"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-pinterest"></i>
-                    <i class="fab fa-twitter"></i>
+                    <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="./404.html"><i class="fab fa-instagram"></i></a>
+                        <a href="./404.html"><i class="fab fa-pinterest"></i></a>
+                        <a href="./404.html"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             <div class="footer-column">
                 <h3>Shop</h3>
                 <ul>
-                    <li><a href="#">Necklaces</a></li>
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Bracelets</a></li>
-                    <li><a href="#">Rings</a></li>
-                    <li><a href="#">Bridal Sets</a></li>
+                    <li><a href="./collections.html">Necklaces</a></li>
+                    <li><a href="./collections.html">Earrings</a></li>
+                    <li><a href="./collections.html">Bracelets</a></li>
+                    <li><a href="./collections.html">Rings</a></li>
+                    <li><a href="./collections.html">Bridal Sets</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Customer Service</h3>
                 <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Shipping & Returns</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Size Guide</a></li>
-                    <li><a href="#">Care Instructions</a></li>
+                    <li><a href="./contact.html">Contact Us</a></li>
+                    <li><a href="./404.html">Shipping & Returns</a></li>
+                    <li><a href="./contact.html">FAQ</a></li>
+                    <li><a href="./404.html">Size Guide</a></li>
+                    <li><a href="./404.html">Care Instructions</a></li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -822,7 +878,7 @@
                 <p>Subscribe to receive updates on new collections and special offers.</p>
                 <div class="newsletter">
                     <input type="email" placeholder="Your email address">
-                    <button class="add-to-cart">Subscribe</button>
+                    <a href="./404.html"><button class="subscribe">Subscribe</button></a>
                 </div>
             </div>
         </div>
@@ -933,6 +989,16 @@
         // Mobile menu toggle
         document.querySelector('.menu-toggle').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
+            
+            // Toggle between hamburger and close icon
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
         // Mobile dropdown toggle
@@ -952,6 +1018,11 @@
                 // Only close the menu if it's not a dropdown toggle
                 if (!this.parentElement.classList.contains('dropdown')) {
                     document.querySelector('.nav-links').classList.remove('active');
+                    
+                    // Reset menu icon to hamburger
+                    const menuToggle = document.querySelector('.menu-toggle i');
+                    menuToggle.classList.remove('fa-times');
+                    menuToggle.classList.add('fa-bars');
                 }
             });
         });
