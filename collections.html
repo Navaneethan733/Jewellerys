@@ -19,6 +19,37 @@
             line-height: 1.6;
         }
 
+        /* Logo styles */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Mobile logo adjustments */
+@media (max-width: 768px) {
+    .logo-img {
+        height: 35px;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
+    }
+}
+
         /* Header Styles */
         header {
             width: 100%;
@@ -420,6 +451,7 @@
 
         /* Pagination */
         .pagination {
+           text-decoration: none;
             display: flex;
             justify-content: center;
             margin-top: 50px;
@@ -427,6 +459,7 @@
         }
 
         .pagination-btn {
+            text-decoration: none;
             width: 40px;
             height: 40px;
             display: flex;
@@ -439,6 +472,7 @@
         }
 
         .pagination-btn:hover, .pagination-btn.active {
+            text-decoration: none;
             background-color: #b8860b;
             color: white;
             border-color: #b8860b;
@@ -646,7 +680,10 @@
             Free shipping on orders over ₹500 | Complimentary gift wrapping
         </div>
         <nav class="navbar">
-            <a href="index.html" class="logo">STACKLY</a>
+             <a href="index.html" class="logo">
+                <img src="./image/Untitled design.png" alt="STACKLY Logo" class="logo-img">
+                <span class="logo-text">STACKLY</span>
+            </a>
             <ul class="nav-links">
                 <li class="dropdown">
                     <a href="index.html">Home <i class="fas fa-chevron-down"></i></a>
