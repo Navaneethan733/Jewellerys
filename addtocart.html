@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - STACKLY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables */
+        :root {
+            --gold: #b8860b;
+            --dark: #333;
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -18,6 +24,84 @@
             background-color: #fefefe;
             color: #333;
             line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Updated Button Styles - Same as home page */
+        .btn, .btn-filled, .subscribe, .checkout-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: transparent;
+            color: #b8860b;
+            border: 2px solid #b8860b;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn:hover, .btn-filled:hover, .subscribe:hover, .checkout-btn:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn:active, .btn-filled:active, .subscribe:active, .checkout-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn::before, .btn-filled::before, .subscribe::before, .checkout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover::before, .btn-filled:hover::before, .subscribe:hover::before, .checkout-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-filled, .checkout-btn {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled:hover, .checkout-btn:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
+        .subscribe {
+            width: 100%;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            background-color: #b8860b;
+            color: white;
+            border: 2px solid #b8860b;
+        }
+
+        .subscribe:hover {
+            background-color: transparent;
+            color: #b8860b;
         }
 
         /* Header Styles */
@@ -316,17 +400,20 @@
         .item-details h3 {
             font-size: 1.2rem;
             margin-bottom: 5px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .item-details p {
             color: #666;
             font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
         }
 
         .item-price {
             font-size: 1.1rem;
             color: #333;
             font-weight: 500;
+            font-family: 'Raleway', sans-serif;
         }
 
         .quantity-controls {
@@ -358,12 +445,14 @@
             width: 40px;
             text-align: center;
             font-weight: 500;
+            font-family: 'Raleway', sans-serif;
         }
 
         .item-total {
             font-size: 1.1rem;
             color: #333;
             font-weight: 500;
+            font-family: 'Raleway', sans-serif;
         }
 
         .remove-item {
@@ -393,12 +482,14 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: 'Raleway', sans-serif;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .summary-total {
@@ -412,22 +503,22 @@
         .checkout-btn {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background-color: #b8860b;
             color: white;
-            border: none;
-            border-radius: 5px;
+            border: 2px solid #b8860b;
+            border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: 'Raleway', sans-serif;
             margin-top: 20px;
-        }
-
-        .checkout-btn:hover {
-            background-color: #a0780a;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
         }
 
         .continue-shopping {
@@ -437,6 +528,7 @@
             color: #666;
             text-decoration: none;
             transition: all 0.3s;
+            font-family: 'Raleway', sans-serif;
         }
 
         .continue-shopping:hover {
@@ -458,93 +550,183 @@
         .empty-cart h3 {
             font-size: 1.8rem;
             margin-bottom: 15px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .empty-cart p {
             color: #666;
             margin-bottom: 30px;
+            font-family: 'Raleway', sans-serif;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: #b8860b;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background-color: #a0780a;
-        }
-
-        /* Footer */
+        /* Updated Footer Styles - Same as home page */
         footer {
-            background-color: #333;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
             color: white;
-            padding: 60px 5% 30px;
-            margin-top: 80px;
+            padding: 80px 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 100px;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b8860b, #d4af37, #b8860b);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #b8860b;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-column ul {
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .footer-links {
             list-style: none;
         }
 
-        .footer-column ul li {
-            margin-bottom: 10px;
+        .footer-links li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
         }
 
-        .footer-column ul li a {
+        .footer-links li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        .footer-links a {
             color: #ccc;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            display: inline-block;
+            padding: 2px 0;
         }
 
-        .footer-column ul li a:hover {
-            color: #b8860b;
+        .footer-links a:hover {
+            color: #d4af37;
+            transform: translateX(5px);
         }
 
         .social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .social-icons a:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
         }
 
         .social-icons i {
-            font-size: 1.2rem;
-            color: #ccc;
-            transition: color 0.3s;
-            cursor: pointer;
+            font-size: 1.1rem;
         }
 
-        .social-icons i:hover {
-            color: #b8860b;
+        .newsletter {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .newsletter input {
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter input:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .newsletter input::placeholder {
+            color: #888;
         }
 
         .copyright {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid #444;
-            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
             font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer background pattern */
+        footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         /* Responsive Design */
@@ -654,6 +836,26 @@
             .page-header h1 {
                 font-size: 2.5rem;
             }
+            
+            /* Footer responsive */
+            footer {
+                padding: 60px 0 25px;
+                margin-top: 70px;
+            }
+            
+            .footer-content {
+                gap: 40px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .social-icons a {
+                width: 36px;
+                height: 36px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -679,8 +881,58 @@
             }
             
             .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 35px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .navbar {
+                padding: 10px 15px !important;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 30px;
+            }
+            
+            .nav-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+            
+            .nav-icons i {
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .page-header {
+                margin-top: 100px;
+                height: 25vh;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 28px;
+            }
+            
+            .nav-icons {
+                gap: 10px;
             }
         }
     </style>
@@ -766,48 +1018,50 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>STACKLY</h3>
-                <p>Creating timeless jewellery for your most precious moments since 1990.</p>
-                <div class="social-icons">
-                    <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
-                    <a href="./404.html"><i class="fab fa-instagram"></i></a>
-                    <a href="./404.html"><i class="fab fa-pinterest"></i></a>
-                    <a href="./404.html"><i class="fab fa-twitter"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>STACKLY</h3>
+                    <p>Creating timeless jewellery for your most precious moments since 1990.</p>
+                    <div class="social-icons">
+                        <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="./404.html"><i class="fab fa-instagram"></i></a>
+                        <a href="./404.html"><i class="fab fa-pinterest"></i></a>
+                        <a href="./404.html"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="./collections.html">Necklaces</a></li>
+                        <li><a href="./collections.html">Earrings</a></li>
+                        <li><a href="./collections.html">Bracelets</a></li>
+                        <li><a href="./collections.html">Rings</a></li>
+                        <li><a href="./collections.html">Bridal Sets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./404.html">Shipping & Returns</a></li>
+                        <li><a href="./404.html">FAQ</a></li>
+                        <li><a href="./404.html">Size Guide</a></li>
+                        <li><a href="./404.html">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive updates on new collections and special offers.</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Your email address">
+                        <button class="subscribe">Subscribe</button>
+                    </div>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Shop</h3>
-                <ul>
-                    <li><a href="./collections.html">Necklaces</a></li>
-                    <li><a href="./collections.html">Earrings</a></li>
-                    <li><a href="./collections.html">Bracelets</a></li>
-                    <li><a href="./collections.html">Rings</a></li>
-                    <li><a href="./collections.html">Bridal Sets</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 STACKLY. All rights reserved.</p>
             </div>
-            <div class="footer-column">
-                <h3>Customer Service</h3>
-                <ul>
-                    <li><a href="./contact.html">Contact Us</a></li>
-                    <li><a href="./404.html">Shipping & Returns</a></li>
-                    <li><a href="./404.html">FAQ</a></li>
-                    <li><a href="./404.html">Size Guide</a></li>
-                    <li><a href="./404.html">Care Instructions</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Newsletter</h3>
-                <p>Subscribe to receive updates on new collections and special offers.</p>
-                <div class="newsletter">
-                    <input type="email" placeholder="Your email address">
-                    <a href="./404.html"><button class="btn">Subscribe</button></a>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 STACKLY. All rights reserved.</p>
         </div>
     </footer>
 
@@ -862,14 +1116,14 @@
                         </div>
                         <h3>Your cart is empty</h3>
                         <p>Discover our beautiful collection and add items to your cart</p>
-                        <a href="./collections.html" class="btn">Start Shopping</a>
+                        <a href="./collections.html" class="btn btn-filled">Start Shopping</a>
                     </div>
                 `;
                 updateTotals(0, 0, 0);
                 return;
             }
 
-            let cartHTML = '';
+            let cartHTML = '<div class="cart-header"><div>Product</div><div>Price</div><div>Quantity</div><div>Total</div></div>';
             let subtotal = 0;
 
             cart.forEach(item => {
@@ -1060,6 +1314,33 @@
                 document.querySelectorAll('.dropdown').forEach(dropdown => {
                     dropdown.classList.remove('active');
                 });
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('.subscribe').addEventListener('click', function(e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter input');
+            const email = emailInput.value;
+            
+            if (email && email.includes('@')) {
+                emailInput.style.borderColor = '#28a745';
+                this.textContent = 'Subscribed!';
+                this.style.backgroundColor = '#28a745';
+                this.style.borderColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                    emailInput.style.borderColor = '';
+                    emailInput.value = '';
+                }, 2000);
+            } else {
+                emailInput.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    emailInput.style.borderColor = '';
+                }, 2000);
             }
         });
 

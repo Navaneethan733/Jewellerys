@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - STACKLY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+     <style>
+        /* CSS Variables */
+        :root {
+            --gold: #b8860b;
+            --dark: #333;
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,36 +30,114 @@
             flex-direction: column;
         }
 
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Updated Button Styles - Same as home page */
+        .btn, .btn-filled, .subscribe, .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: transparent;
+            color: #b8860b;
+            border: 2px solid #b8860b;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn:hover, .btn-filled:hover, .subscribe:hover, .cta-button:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn:active, .btn-filled:active, .subscribe:active, .cta-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn::before, .btn-filled::before, .subscribe::before, .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover::before, .btn-filled:hover::before, .subscribe:hover::before, .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .btn-filled, .search-box button {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled:hover, .search-box button:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
+        .subscribe {
+            width: 100%;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            background-color: #b8860b;
+            color: white;
+            border: 2px solid #b8860b;
+        }
+
+        .subscribe:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
         /* Logo styles */
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 1.5rem;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
 
-.logo-img {
-    height: 40px;
-    width: auto;
-    margin-right: 10px;
-}
+        .logo-img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
 
-.logo-text {
-    font-family: 'Playfair Display', serif;
-}
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+        }
 
-/* Mobile logo adjustments */
-@media (max-width: 768px) {
-    .logo-img {
-        height: 35px;
-    }
-    
-    .logo-text {
-        font-size: 1.3rem;
-    }
-}
+        /* Mobile logo adjustments */
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 35px;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+        }
 
         /* Header Styles */
         header {
@@ -76,14 +161,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #b8860b;
-            text-decoration: none;
-            letter-spacing: 2px;
         }
 
         .nav-links {
@@ -232,6 +309,7 @@
             font-size: 2rem;
             color: #333;
             margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .error-message {
@@ -239,43 +317,9 @@
             color: #666;
             margin-bottom: 40px;
             line-height: 1.8;
+            font-family: 'Raleway', sans-serif;
         }
 
-        .cta-button {
-            display: inline-block;
-            background-color: #b8860b;
-            color: white;
-            padding: 15px 35px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 10px;
-        }
-
-        .cta-button:hover {
-            background-color: #a0780a;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.3);
-        }
-
-        .cta-button.outline {
-            background: transparent;
-            border: 2px solid #b8860b;
-            color: #b8860b;
-        }
-
-        .cta-button.outline:hover {
-            background: #b8860b;
-            color: white;
-        }
-
-        /* Search Box */
         .search-box {
             max-width: 500px;
             margin: 40px auto;
@@ -290,6 +334,7 @@
             font-size: 1rem;
             outline: none;
             transition: all 0.3s;
+            font-family: 'Raleway', sans-serif;
         }
 
         .search-box input:focus {
@@ -303,15 +348,38 @@
             top: 5px;
             background: #b8860b;
             color: white;
-            border: none;
+            border: 2px solid #b8860b;
             border-radius: 50px;
             padding: 10px 25px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
         }
 
         .search-box button:hover {
-            background: #a0780a;
+            background-color: transparent;
+            color: #b8860b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+        }
+
+        .search-box button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .search-box button:hover::before {
+            left: 100%;
         }
 
         /* Quick Links */
@@ -323,6 +391,7 @@
             font-size: 1.5rem;
             color: #333;
             margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .links-grid {
@@ -341,6 +410,7 @@
             transition: all 0.3s;
             text-decoration: none;
             color: #333;
+            font-family: 'Raleway', sans-serif;
         }
 
         .link-card:hover {
@@ -381,67 +451,174 @@
             animation-delay: 4s;
         }
 
-        /* Footer */
+        /* Updated Footer Styles - Same as home page */
         footer {
-            background-color: #333;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
             color: white;
-            padding: 60px 5% 30px;
+            padding: 80px 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b8860b, #d4af37, #b8860b);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #b8860b;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-column ul {
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .footer-links {
             list-style: none;
         }
 
-        .footer-column ul li {
-            margin-bottom: 10px;
+        .footer-links li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
         }
 
-        .footer-column ul li a {
+        .footer-links li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        .footer-links a {
             color: #ccc;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            display: inline-block;
+            padding: 2px 0;
         }
 
-        .footer-column ul li a:hover {
-            color: #b8860b;
+        .footer-links a:hover {
+            color: #d4af37;
+            transform: translateX(5px);
         }
 
         .social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .social-icons a:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
         }
 
         .social-icons i {
-            font-size: 1.2rem;
-            color: #ccc;
-            transition: color 0.3s;
-            cursor: pointer;
+            font-size: 1.1rem;
         }
 
-        .social-icons i:hover {
-            color: #b8860b;
+        .newsletter {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .newsletter input {
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter input:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .newsletter input::placeholder {
+            color: #888;
         }
 
         .copyright {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid #444;
-            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
             font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer background pattern */
+        footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         /* Responsive Design */
@@ -523,6 +700,26 @@
             .floating-gem {
                 display: none;
             }
+            
+            /* Footer responsive */
+            footer {
+                padding: 60px 0 25px;
+                margin-top: 70px;
+            }
+            
+            .footer-content {
+                gap: 40px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .social-icons a {
+                width: 36px;
+                height: 36px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -551,6 +748,62 @@
 
             .links-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            /* Footer responsive for small screens */
+            footer {
+                padding: 50px 0 20px;
+                margin-top: 60px;
+            }
+            
+            .footer-content {
+                gap: 35px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .navbar {
+                padding: 10px 15px !important;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 30px;
+            }
+            
+            .nav-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+            
+            .nav-icons i {
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 28px;
+            }
+            
+            .nav-icons {
+                gap: 10px;
             }
         }
     </style>
@@ -622,10 +875,10 @@
             </div>
 
             <div class="action-buttons">
-                <a href="index.html" class="cta-button">
+                <a href="index.html" class="btn btn-filled">
                     <i class="fas fa-home"></i> Back to Home
                 </a>
-                <a href="./404.html" class="cta-button outline">
+                <a href="./collections.html" class="btn">
                     <i class="fas fa-gem"></i> Browse Collections
                 </a>
             </div>
@@ -656,48 +909,50 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>STACKLY</h3>
-                <p>Creating timeless jewellery for your most precious moments since 1990.</p>
-                <div class="social-icons">
-                    <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
-                    <a href="./404.html"><i class="fab fa-instagram"></i></a>
-                    <a href="./404.html"><i class="fab fa-pinterest"></i></a>
-                    <a href="./404.html"><i class="fab fa-twitter"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>STACKLY</h3>
+                    <p>Creating timeless jewellery for your most precious moments since 1990.</p>
+                    <div class="social-icons">
+                        <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="./404.html"><i class="fab fa-instagram"></i></a>
+                        <a href="./404.html"><i class="fab fa-pinterest"></i></a>
+                        <a href="./404.html"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="./collections.html">Collections</a></li>
+                        <li><a href="./bridal.html">Bridal</a></li>
+                        <li><a href="./engagement.html">Engagement</a></li>
+                        <li><a href="./404.html">Custom Designs</a></li>
+                        <li><a href="./404.html">Gifts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./404.html">Shipping & Returns</a></li>
+                        <li><a href="./404.html">FAQ</a></li>
+                        <li><a href="./404.html">Size Guide</a></li>
+                        <li><a href="./404.html">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i> Salem, Tamilnadu</a></li>
+                        <li><a href="tel:+912212345678"><i class="fas fa-phone"></i> +91 22 1234 5678</a></li>
+                        <li><a href="mailto:info@stackly.com"><i class="fas fa-envelope"></i> info@stackly.com</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Shop</h3>
-                <ul>
-                    <li><a href="./collections.html">Collections</a></li>
-                    <li><a href="./bridal.html">Bridal</a></li>
-                    <li><a href="./engagement.html">Engagement</a></li>
-                    <li><a href="./404.html">Custom Designs</a></li>
-                    <li><a href="./404.html">Gifts</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 STACKLY. All rights reserved.</p>
             </div>
-            <div class="footer-column">
-                <h3>Customer Service</h3>
-                <ul>
-                    <li><a href="./contact.html">Contact Us</a></li>
-                    <li><a href="./404.html">Shipping & Returns</a></li>
-                    <li><a href="./404.html">FAQ</a></li>
-                    <li><a href="./404.html">Size Guide</a></li>
-                    <li><a href="./404.html">Care Instructions</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Contact Info</h3>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> Salem, Tamilnadu</li>
-                    <li><i class="fas fa-phone"></i> +91 22 1234 5678</li>
-                    <li><i class="fas fa-envelope"></i> info@stackly.com</li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 STACKLY. All rights reserved.</p>
         </div>
     </footer>
 
@@ -743,8 +998,33 @@
                 document.querySelector('.search-box button').click();
             }
         });
+
+        // Newsletter form submission
+        document.querySelector('.subscribe').addEventListener('click', function(e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter input');
+            const email = emailInput.value;
+            
+            if (email && email.includes('@')) {
+                emailInput.style.borderColor = '#28a745';
+                this.textContent = 'Subscribed!';
+                this.style.backgroundColor = '#28a745';
+                this.style.borderColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                    emailInput.style.borderColor = '';
+                    emailInput.value = '';
+                }, 2000);
+            } else {
+                emailInput.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    emailInput.style.borderColor = '';
+                }, 2000);
+            }
+        });
     </script>
 </body>
-
 </html>
-

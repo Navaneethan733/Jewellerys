@@ -6,6 +6,14 @@
     <title>STACKLY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS Variables */
+        :root {
+            --gold: #b8860b;
+            --dark: #333;
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -20,24 +28,120 @@
             overflow-x: hidden;
         }
 
-        /* Header Styles */
-        header {
+        .container {
             width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            background-color: #fff;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Top bar */
-        .top-bar {
-            background-color: #f8f0e5;
-            padding: 8px 0;
-            text-align: center;
+        /* Updated Button Styles - Same as home page */
+        .btn, .btn-filled, .subscribe, .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: transparent;
+            color: #b8860b;
+            border: 2px solid #b8860b;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn:hover, .btn-filled:hover, .subscribe:hover, .cta-button:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn:active, .btn-filled:active, .subscribe:active, .cta-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn::before, .btn-filled::before, .subscribe::before, .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover::before, .btn-filled:hover::before, .subscribe:hover::before, .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .btn-filled, .cta-button {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled:hover, .cta-button:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
+        .subscribe {
+            width: 100%;
             font-size: 0.9rem;
-            color: #8c6d46;
+            padding: 12px 24px;
+            background-color: #b8860b;
+            color: white;
+            border: 2px solid #b8860b;
+        }
+
+        .subscribe:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 20px auto 0;
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Logo styles */
@@ -69,6 +173,26 @@
             .logo-text {
                 font-size: 1.3rem;
             }
+        }
+
+        /* Header Styles */
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Top bar */
+        .top-bar {
+            background-color: #f8f0e5;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8c6d46;
         }
 
         /* Navbar */
@@ -341,11 +465,12 @@
         .page-header p {
             font-size: 1.5rem;
             max-width: 700px;
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Our Story Section */
         .our-story {
-            padding: 80px 5%;
+            padding: 100px 0;
             background: #fdfaf6;
         }
 
@@ -374,23 +499,6 @@
             display: block;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #333;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 80px;
-            height: 3px;
-            background-color: #b8860b;
-        }
-
         .story-content h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
@@ -402,31 +510,12 @@
             margin-bottom: 20px;
             line-height: 1.7;
             font-size: 1.1rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: #b8860b;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .cta-button:hover {
-            background-color: #a0780a;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Craftsmanship Section */
         .craftsmanship {
-            padding: 80px 5%;
+            padding: 100px 0;
             background-color: white;
         }
 
@@ -465,11 +554,12 @@
         .craft-card p {
             color: #666;
             line-height: 1.7;
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Our Values */
         .our-values {
-            padding: 80px 5%;
+            padding: 100px 0;
             background-color: #fdfaf6;
         }
 
@@ -506,11 +596,12 @@
         .value-card p {
             color: #666;
             line-height: 1.7;
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Team Section */
         .our-team {
-            padding: 80px 5%;
+            padding: 100px 0;
             background-color: white;
             text-align: center;
         }
@@ -554,17 +645,19 @@
             color: #b8860b;
             font-weight: bold;
             margin-bottom: 15px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .member-info p {
             color: #666;
             line-height: 1.7;
             font-size: 0.95rem;
+            font-family: 'Raleway', sans-serif;
         }
 
         /* Sustainability */
         .sustainability {
-            padding: 80px 5%;
+            padding: 100px 0;
             background-color: #fdfaf6;
         }
 
@@ -595,7 +688,7 @@
 
         /* Visit Us */
         .visit-us {
-            padding: 80px 5%;
+            padding: 100px 0;
             background-color: white;
             text-align: center;
         }
@@ -638,130 +731,187 @@
         .info-item p {
             color: #666;
             line-height: 1.7;
+            font-family: 'Raleway', sans-serif;
         }
 
-        /* Footer */
+        /* Updated Footer Styles - Same as home page */
         footer {
-            background-color: #333;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
             color: white;
-            padding: 60px 5% 30px;
-            margin-top: 80px;
+            padding: 80px 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 100px;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b8860b, #d4af37, #b8860b);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #b8860b;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-column ul {
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .footer-links {
             list-style: none;
         }
 
-        .footer-column ul li {
-            margin-bottom: 10px;
+        .footer-links li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
         }
 
-        .footer-column ul li a {
+        .footer-links li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        .footer-links a {
             color: #ccc;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            display: inline-block;
+            padding: 2px 0;
         }
 
-        .footer-column ul li a:hover {
-            color: #b8860b;
+        .footer-links a:hover {
+            color: #d4af37;
+            transform: translateX(5px);
         }
 
         .social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             color: #ccc;
             text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .social-icons a:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
         }
 
         .social-icons i {
-            font-size: 1.2rem;
-            transition: color 0.3s;
-            cursor: pointer;
+            font-size: 1.1rem;
         }
 
-        .social-icons i:hover {
-            color: #b8860b;
+        .newsletter {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
         }
 
         .newsletter input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        /* Fixed Subscribe Button */
-        .subscribe {    
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #b8860b;
-            color: #333;
-            border: 2px solid #b8860b;
-            border-radius: 5px;
-            font-weight: 500;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
             font-family: 'Raleway', sans-serif;
-            width: 100%;
-            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .subscribe:hover {
-            background-color: transparent;
-            color: #b8860b;
+        .newsletter input:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .newsletter input::placeholder {
+            color: #888;
         }
 
         .copyright {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid #444;
-            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
             font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .page-header h1 {
-                font-size: 3.5rem;
-            }
+        /* Footer background pattern */
+        footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        @media (max-width: 992px) {
-            .page-header h1 {
-                font-size: 3rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-            
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
             .story-container,
             .sustainability-content,
             .visit-container {
                 flex-direction: column;
             }
-
+            
             .story-image,
             .sustainability-image,
             .store-image {
@@ -771,105 +921,217 @@
 
         @media (max-width: 768px) {
             .navbar {
-                padding: 15px 0;
+                padding: 15px 20px !important;
+                position: relative;
+                min-height: 70px;
             }
             
-            /* Page Header */
-            .page-header {
-                height: 50vh;
-                margin-top: 50px;
-            }
-
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-
-            .page-header p {
-                font-size: 1.2rem;
-            }
-
-            /* Sections */
-            .our-story, .craftsmanship, .our-values, .our-team, .sustainability, .visit-us {
-                padding: 50px 5%;
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 30px;
-            }
-
-            /* Craftsmanship Grid */
-            .craftsmanship-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            /* Values Container */
-            .values-container {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
                 flex-direction: column;
-                gap: 30px;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
             }
 
-            /* Team Grid */
-            .team-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
+            .nav-links.active {
+                display: flex;
             }
 
-            /* Footer */
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            /* Dropdown adjustments for mobile */
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: transparent;
+                padding-left: 20px;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content a {
+                padding: 8px 0;
+                border-bottom: none;
+                font-size: 1rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+            }
+            
+            /* Ensure logo is properly sized and positioned */
+            .logo {
+                flex: 1;
+                max-width: calc(100% - 60px);
+            }
+            
+            .logo-img {
+                height: 35px;
+                margin-right: 8px;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            /* Adjust nav icons positioning */
+            .nav-icons {
+                margin-left: auto;
+                margin-right: 15px;
+                gap: 15px;
+            }
+            
+            /* Footer responsive */
             footer {
-                padding: 40px 5% 20px;
-                margin-top: 50px;
+                padding: 60px 0 25px;
+                margin-top: 70px;
             }
-
+            
             .footer-content {
-                gap: 30px;
+                gap: 40px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .social-icons a {
+                width: 36px;
+                height: 36px;
             }
         }
 
         @media (max-width: 576px) {
+            section {
+                padding: 70px 0;
+            }
+            
             .page-header {
-                height: 40vh;
-                margin-top: 45px;
+                height: 50vh;
+                margin-top: 60px;
             }
-
+            
             .page-header h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
-
+            
             .page-header p {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
-
-            .our-story, .craftsmanship, .our-values, .our-team, .sustainability, .visit-us {
-                padding: 30px 4%;
+            
+            .story-container,
+            .sustainability-content,
+            .visit-container {
+                gap: 30px;
             }
-
-            .section-title {
-                font-size: 1.8rem;
+            
+            .values-container {
+                flex-direction: column;
+                gap: 30px;
             }
-
-            .footer-content {
+            
+            .team-grid {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 30px;
             }
             
-            .navbar {
-                padding: 12px 4%;
+            /* Footer responsive for small screens */
+            footer {
+                padding: 50px 0 20px;
+                margin-top: 60px;
             }
             
-            .logo {
-                font-size: 1.5rem;
+            .footer-content {
+                gap: 35px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.1rem;
             }
         }
 
-        @media (max-width: 400px) {
-            .page-header h1 {
-                font-size: 1.8rem;
+        @media (max-width: 425px) {
+            .navbar {
+                padding: 10px 15px !important;
             }
             
-            .section-title {
-                font-size: 1.6rem;
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 30px;
+            }
+            
+            .nav-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+            
+            .nav-icons i {
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 28px;
+            }
+            
+            .nav-icons {
+                gap: 10px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -929,103 +1191,111 @@
 
     <!-- Our Story Section -->
     <section class="our-story">
-        <h2 class="section-title">The STACKLY Legacy</h2>
-        <div class="story-container">
-            <div class="story-content">
-                <h3>A Tradition of Excellence</h3>
-                <p>Founded in 1990 by master jeweler Rajiv Taya, STACKLY began as a small workshop with a big vision: to create jewellery that celebrates life's most precious moments with unparalleled craftsmanship and timeless design.</p>
-                <p>What started as a family-run business has grown into a beloved brand known for its exquisite bridal and engagement collections, yet we've never lost sight of our founding principles: quality, integrity, and attention to detail.</p>
-                <p>Today, under the leadership of Rajiv's daughter, Priya Taya, we continue to blend traditional techniques with contemporary design, creating pieces that honor our heritage while looking toward the future.</p>
-                <a href="collections.html" class="cta-button">Explore Our Collections</a>
-            </div>
-            <div class="story-image">
-                <img src="./image/about/Pic1.avif" alt="STACKLY Workshop">
+        <div class="container">
+            <h2 class="section-title">The STACKLY Legacy</h2>
+            <div class="story-container">
+                <div class="story-content">
+                    <h3>A Tradition of Excellence</h3>
+                    <p>Founded in 1990 by master jeweler Rajiv Taya, STACKLY began as a small workshop with a big vision: to create jewellery that celebrates life's most precious moments with unparalleled craftsmanship and timeless design.</p>
+                    <p>What started as a family-run business has grown into a beloved brand known for its exquisite bridal and engagement collections, yet we've never lost sight of our founding principles: quality, integrity, and attention to detail.</p>
+                    <p>Today, under the leadership of Rajiv's daughter, Priya Taya, we continue to blend traditional techniques with contemporary design, creating pieces that honor our heritage while looking toward the future.</p>
+                    <a href="collections.html" class="btn btn-filled">Explore Our Collections</a>
+                </div>
+                <div class="story-image">
+                    <img src="./image/about/Pic1.avif" alt="STACKLY Workshop">
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Craftsmanship Section -->
     <section class="craftsmanship">
-        <h2 class="section-title">Our Craftsmanship</h2>
-        <div class="craftsmanship-grid">
-            <div class="craft-card">
-                <div class="craft-icon">
-                    <i class="fas fa-gem"></i>
+        <div class="container">
+            <h2 class="section-title">Our Craftsmanship</h2>
+            <div class="craftsmanship-grid">
+                <div class="craft-card">
+                    <div class="craft-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Expert Diamond Selection</h3>
+                    <p>Each diamond is hand-selected for its exceptional cut, color, clarity, and carat weight. We work only with ethically sourced stones that meet our rigorous standards.</p>
                 </div>
-                <h3>Expert Diamond Selection</h3>
-                <p>Each diamond is hand-selected for its exceptional cut, color, clarity, and carat weight. We work only with ethically sourced stones that meet our rigorous standards.</p>
-            </div>
-            <div class="craft-card">
-                <div class="craft-icon">
-                    <i class="fas fa-hammer"></i>
+                <div class="craft-card">
+                    <div class="craft-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h3>Master Artisans</h3>
+                    <p>Our jewellery is crafted by master artisans with decades of experience, using techniques passed down through generations combined with modern technology.</p>
                 </div>
-                <h3>Master Artisans</h3>
-                <p>Our jewellery is crafted by master artisans with decades of experience, using techniques passed down through generations combined with modern technology.</p>
-            </div>
-            <div class="craft-card">
-                <div class="craft-icon">
-                    <i class="fas fa-eye"></i>
+                <div class="craft-card">
+                    <div class="craft-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Attention to Detail</h3>
+                    <p>From initial design to final polish, every piece undergoes multiple quality checks to ensure it meets our exacting standards of perfection.</p>
                 </div>
-                <h3>Attention to Detail</h3>
-                <p>From initial design to final polish, every piece undergoes multiple quality checks to ensure it meets our exacting standards of perfection.</p>
             </div>
         </div>
     </section>
 
     <!-- Our Values -->
     <section class="our-values">
-        <h2 class="section-title">Our Values</h2>
-        <div class="values-container">
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-handshake"></i>
+        <div class="container">
+            <h2 class="section-title">Our Values</h2>
+            <div class="values-container">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Integrity</h3>
+                    <p>We believe in complete transparency about our materials, processes, and pricing. Your trust is our most valued asset.</p>
                 </div>
-                <h3>Integrity</h3>
-                <p>We believe in complete transparency about our materials, processes, and pricing. Your trust is our most valued asset.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-heart"></i>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Passion</h3>
+                    <p>We're not just jewellery makers; we're storytellers who help you celebrate life's most meaningful moments.</p>
                 </div>
-                <h3>Passion</h3>
-                <p>We're not just jewellery makers; we're storytellers who help you celebrate life's most meaningful moments.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-award"></i>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Excellence</h3>
+                    <p>We never compromise on quality, from the materials we use to the craftsmanship in every piece we create.</p>
                 </div>
-                <h3>Excellence</h3>
-                <p>We never compromise on quality, from the materials we use to the craftsmanship in every piece we create.</p>
             </div>
         </div>
     </section>
 
     <!-- Our Team -->
     <section class="our-team">
-        <h2 class="section-title">Meet Our Team</h2>
-        <div class="team-grid">
-            <div class="team-member">
-                <img src="./image/about/image2.avif" alt="Priya Taya" class="member-image">
-                <div class="member-info">
-                    <h3>Priya Taya</h3>
-                    <p class="member-role">Creative Director</p>
-                    <p>Daughter of founder Rajiv Taya, Priya brings contemporary vision while honoring traditional craftsmanship. With a degree in jewellery design from Central Saint Martins, she leads our design team.</p>
+        <div class="container">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="./image/about/image2.avif" alt="Priya Taya" class="member-image">
+                    <div class="member-info">
+                        <h3>Priya Taya</h3>
+                        <p class="member-role">Creative Director</p>
+                        <p>Daughter of founder Rajiv Taya, Priya brings contemporary vision while honoring traditional craftsmanship. With a degree in jewellery design from Central Saint Martins, she leads our design team.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="team-member">
-                <img src="./image/about/image1.avif" alt="Arjun Mehta" class="member-image">
-                <div class="member-info">
-                    <h3>Arjun Mehta</h3>
-                    <p class="member-role">Master Goldsmith</p>
-                    <p>With over 30 years of experience, Arjun is our senior goldsmith who oversees the creation of our most complex pieces. His expertise in traditional Indian jewellery techniques is unparalleled.</p>
+                <div class="team-member">
+                    <img src="./image/about/image1.avif" alt="Arjun Mehta" class="member-image">
+                    <div class="member-info">
+                        <h3>Arjun Mehta</h3>
+                        <p class="member-role">Master Goldsmith</p>
+                        <p>With over 30 years of experience, Arjun is our senior goldsmith who oversees the creation of our most complex pieces. His expertise in traditional Indian jewellery techniques is unparalleled.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="team-member">
-                <img src="./image/about/images.avif" alt="Sophie Williams" class="member-image">
-                <div class="member-info">
-                    <h3>Sophie Williams</h3>
-                    <p class="member-role">Diamond Specialist</p>
-                    <p>Sophie is our GIA-certified gemologist who ensures every diamond in our collection meets our exacting standards for quality, cut, and ethical sourcing.</p>
+                <div class="team-member">
+                    <img src="./image/about/images.avif" alt="Sophie Williams" class="member-image">
+                    <div class="member-info">
+                        <h3>Sophie Williams</h3>
+                        <p class="member-role">Diamond Specialist</p>
+                        <p>Sophie is our GIA-certified gemologist who ensures every diamond in our collection meets our exacting standards for quality, cut, and ethical sourcing.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1033,94 +1303,100 @@
 
     <!-- Sustainability -->
     <section class="sustainability">
-        <h2 class="section-title">Our Commitment</h2>
-        <div class="sustainability-content">
-            <div class="sustainability-text">
-                <h3>Sustainability & Ethics</h3>
-                <p>At STACKLY, we believe beautiful jewellery should also be responsible jewellery. We're committed to ethical practices throughout our supply chain.</p>
-                <p>All our gold is sourced from certified responsible mines, and our diamonds are conflict-free. We're continuously working to reduce our environmental footprint through recycling programs and sustainable packaging.</p>
-                <p>We partner with organizations that support artisan communities and promote fair trade practices in the jewellery industry.</p>
-                <a href="#" class="cta-button">Learn More</a>
-            </div>
-            <div class="sustainability-image">
-                <img src="./image/about/pic2.avif" alt="Sustainable Practices">
+        <div class="container">
+            <h2 class="section-title">Our Commitment</h2>
+            <div class="sustainability-content">
+                <div class="sustainability-text">
+                    <h3>Sustainability & Ethics</h3>
+                    <p>At STACKLY, we believe beautiful jewellery should also be responsible jewellery. We're committed to ethical practices throughout our supply chain.</p>
+                    <p>All our gold is sourced from certified responsible mines, and our diamonds are conflict-free. We're continuously working to reduce our environmental footprint through recycling programs and sustainable packaging.</p>
+                    <p>We partner with organizations that support artisan communities and promote fair trade practices in the jewellery industry.</p>
+                    <a href="#" class="btn btn-filled">Learn More</a>
+                </div>
+                <div class="sustainability-image">
+                    <img src="./image/about/pic2.avif" alt="Sustainable Practices">
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Visit Us -->
     <section class="visit-us">
-        <h2 class="section-title">Visit Our Boutique</h2>
-        <div class="visit-container">
-            <div class="store-info">
-                <div class="info-item">
-                    <h3>Our Flagship Store</h3>
-                    <p>Experience the STACKLY difference at our luxurious boutique, where our experts will guide you through our collections and help you find the perfect piece.</p>
+        <div class="container">
+            <h2 class="section-title">Visit Our Boutique</h2>
+            <div class="visit-container">
+                <div class="store-info">
+                    <div class="info-item">
+                        <h3>Our Flagship Store</h3>
+                        <p>Experience the STACKLY difference at our luxurious boutique, where our experts will guide you through our collections and help you find the perfect piece.</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Location</h3>
+                        <p>47 Diamond District<br>Salem, Tamil Nadu<br>India</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Hours</h3>
+                        <p>Monday - Saturday: 10AM - 7PM<br>Sunday: 11AM - 5PM</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Contact</h3>
+                        <p>Phone: +91 22 1234 5678<br>Email: visit@stackly.com</p>
+                    </div>
+                    <a href="contact.html" class="btn btn-filled">Get Directions</a>
                 </div>
-                <div class="info-item">
-                    <h3>Location</h3>
-                    <p>47 Diamond District<br>Salem, Tamil Nadu<br>India</p>
+                <div class="store-image">
+                    <img src="./image/about/pic3.avif" alt="STACKLY Boutique">
                 </div>
-                <div class="info-item">
-                    <h3>Hours</h3>
-                    <p>Monday - Saturday: 10AM - 7PM<br>Sunday: 11AM - 5PM</p>
-                </div>
-                <div class="info-item">
-                    <h3>Contact</h3>
-                    <p>Phone: +91 22 1234 5678<br>Email: visit@stackly.com</p>
-                </div>
-                <a href="contact.html" class="cta-button">Get Directions</a>
-            </div>
-            <div class="store-image">
-                <img src="./image/about/pic3.avif" alt="STACKLY Boutique">
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>STACKLY</h3>
-                <p>Creating timeless jewellery for your most precious moments since 1990.</p>
-                <div class="social-icons">
-                    <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
-                    <a href="./404.html"><i class="fab fa-instagram"></i></a>
-                    <a href="./404.html"><i class="fab fa-pinterest"></i></a>
-                    <a href="./404.html"><i class="fab fa-twitter"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>STACKLY</h3>
+                    <p>Creating timeless jewellery for your most precious moments since 1990.</p>
+                    <div class="social-icons">
+                        <a href="./404.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="./404.html"><i class="fab fa-instagram"></i></a>
+                        <a href="./404.html"><i class="fab fa-pinterest"></i></a>
+                        <a href="./404.html"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="./collections.html">Engagement Rings</a></li>
+                        <li><a href="./collections.html">Wedding Bands</a></li>
+                        <li><a href="./collections.html">Bridal Jewellery</a></li>
+                        <li><a href="./collections.html">Custom Designs</a></li>
+                        <li><a href="./collections.html">Gifts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="./404.html">Shipping & Returns</a></li>
+                        <li><a href="./404.html">Ring Sizing Guide</a></li>
+                        <li><a href="./404.html">Diamond Education</a></li>
+                        <li><a href="./404.html">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive updates on new collections and special offers.</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Your email address">
+                        <button class="subscribe">Subscribe</button>
+                    </div>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Shop</h3>
-                <ul>
-                    <li><a href="./collections.html">Engagement Rings</a></li>
-                    <li><a href="./collections.html">Wedding Bands</a></li>
-                    <li><a href="./collections.html">Bridal Jewellery</a></li>
-                    <li><a href="./collections.html">Custom Designs</a></li>
-                    <li><a href="./collections.html">Gifts</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 STACKLY. All rights reserved.</p>
             </div>
-            <div class="footer-column">
-                <h3>Customer Service</h3>
-                <ul>
-                    <li><a href="./contact.html">Contact Us</a></li>
-                    <li><a href="./404.html">Shipping & Returns</a></li>
-                    <li><a href="./404.html">Ring Sizing Guide</a></li>
-                    <li><a href="./404.html">Diamond Education</a></li>
-                    <li><a href="./404.html">Care Instructions</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Newsletter</h3>
-                <p>Subscribe to receive updates on new collections and special offers.</p>
-                <div class="newsletter">
-                    <input type="email" placeholder="Your email address">
-                    <a href="./404.html"><button class="subscribe">Subscribe</button></a>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 STACKLY. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1235,6 +1511,33 @@
                 document.querySelectorAll('.dropdown').forEach(dropdown => {
                     dropdown.classList.remove('active');
                 });
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('.subscribe').addEventListener('click', function(e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter input');
+            const email = emailInput.value;
+            
+            if (email && email.includes('@')) {
+                emailInput.style.borderColor = '#28a745';
+                this.textContent = 'Subscribed!';
+                this.style.backgroundColor = '#28a745';
+                this.style.borderColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                    emailInput.style.borderColor = '';
+                    emailInput.value = '';
+                }, 2000);
+            } else {
+                emailInput.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    emailInput.style.borderColor = '';
+                }, 2000);
             }
         });
 

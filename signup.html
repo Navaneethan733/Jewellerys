@@ -5,17 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - STACKLY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
-        }
-
+     <style>
+        /* CSS Variables */
         :root {
-            --gold: #D4AF37;
+            --gold: #b8860b;
             --rose-gold: #B76E79;
             --silver: #C0C0C0;
             --dark: #1a1a1a;
@@ -23,6 +16,14 @@
             --light: #f8f8f8;
             --cream: #f9f5f0;
             --transition: all 0.4s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
         }
 
         body {
@@ -42,35 +43,75 @@
             padding: 0 20px;
         }
 
-        .btn {
+        /* Updated Button Styles - Same as home page */
+        .btn, .btn-filled, .subscribe, .social-btn, .signup-button {
             display: inline-block;
             padding: 14px 32px;
             background-color: transparent;
-            color: var(--gold);
-            border: 2px solid var(--gold);
-            border-radius: 2px;
-            font-weight: 500;
+            color: #b8860b;
+            border: 2px solid #b8860b;
+            border-radius: 50px;
+            font-weight: 600;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Raleway', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
         }
 
-        .btn:hover {
-            background-color: var(--gold);
-            color: var(--dark);
+        .btn:hover, .btn-filled:hover, .subscribe:hover, .social-btn:hover, .signup-button:hover {
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
         }
 
-        .btn-filled {
-            background-color: var(--gold);
-            color: var(--dark);
+        .btn:active, .btn-filled:active, .subscribe:active, .social-btn:active, .signup-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
         }
 
-        .btn-filled:hover {
+        .btn::before, .btn-filled::before, .subscribe::before, .social-btn::before, .signup-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover::before, .btn-filled:hover::before, .subscribe:hover::before, .social-btn:hover::before, .signup-button:hover::before {
+            left: 100%;
+        }
+
+        .btn-filled, .signup-button {
+            background-color: #b8860b;
+            color: white;
+        }
+
+        .btn-filled:hover, .signup-button:hover {
             background-color: transparent;
-            color: var(--gold);
+            color: #b8860b;
+        }
+
+        .subscribe {
+            width: 100%;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            background-color: #b8860b;
+            color: white;
+            border: 2px solid #b8860b;
+        }
+
+        .subscribe:hover {
+            background-color: transparent;
+            color: #b8860b;
         }
 
         /* Logo styles */
@@ -91,6 +132,17 @@
 
         .logo-text {
             font-family: 'Playfair Display', serif;
+        }
+
+        /* Mobile logo adjustments */
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 35px;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
         }
 
         /* Header Styles */
@@ -462,7 +514,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.1);
         }
 
         .password-input {
@@ -549,28 +601,6 @@
             color: var(--rose-gold);
         }
 
-        .signup-button {
-            width: 100%;
-            padding: 16px;
-            background-color: var(--gold);
-            color: var(--dark);
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Raleway', sans-serif;
-            margin-bottom: 20px;
-        }
-
-        .signup-button:hover {
-            background-color: var(--rose-gold);
-            transform: translateY(-2px);
-        }
-
         .divider {
             text-align: center;
             margin: 30px 0;
@@ -606,30 +636,61 @@
         .social-btn {
             flex: 1;
             text-decoration: none;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 14px 20px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
             background: white;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             font-family: 'Raleway', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .social-btn:hover {
             border-color: var(--gold);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.2);
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .social-btn:hover::before {
+            left: 100%;
         }
 
         .social-btn.google {
             color: #DB4437;
+            border-color: #DB4437;
+        }
+
+        .social-btn.google:hover {
+            background-color: #DB4437;
+            color: white;
         }
 
         .social-btn.facebook {
             color: #4267B2;
+            border-color: #4267B2;
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #4267B2;
+            color: white;
         }
 
         .login-link {
@@ -648,37 +709,60 @@
             color: var(--rose-gold);
         }
 
-        /* Footer */
+        /* Updated Footer Styles - Same as home page */
         footer {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 60px 0 20px;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            color: white;
+            padding: 80px 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b8860b, #d4af37, #b8860b);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-column h3 {
             font-size: 1.3rem;
             margin-bottom: 25px;
-            color: var(--gold);
-            font-weight: 400;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 1px;
             position: relative;
-            padding-bottom: 10px;
+            display: inline-block;
         }
 
         .footer-column h3::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: -8px;
             width: 40px;
-            height: 1px;
-            background-color: var(--gold);
+            height: 2px;
+            background-color: #b8860b;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .footer-links {
@@ -687,24 +771,36 @@
 
         .footer-links li {
             margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-links li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+            font-weight: bold;
         }
 
         .footer-links a {
-            color: #aaa;
+            color: #ccc;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             font-family: 'Raleway', sans-serif;
+            display: inline-block;
+            padding: 2px 0;
         }
 
         .footer-links a:hover {
-            color: var(--gold);
-            padding-left: 5px;
+            color: #d4af37;
+            transform: translateX(5px);
         }
 
         .social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .social-icons a {
@@ -713,56 +809,74 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background-color: rgba(212, 175, 55, 0.1);
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: var(--gold);
+            color: #ccc;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .social-icons a:hover {
-            background-color: var(--gold);
-            color: var(--dark);
-            transform: translateY(-3px);
+            background-color: #b8860b;
+            color: white;
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
+        }
+
+        .social-icons i {
+            font-size: 1.1rem;
         }
 
         .newsletter {
             display: flex;
+            flex-direction: column;
             margin-top: 20px;
         }
 
         .newsletter input {
-            flex: 1;
-            padding: 12px 15px;
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
             background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--light);
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter input:focus {
             outline: none;
-            font-family: 'Raleway', sans-serif;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
-        .newsletter button {
-            padding: 0 20px;
-            background-color: var(--gold);
-            color: var(--dark);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Raleway', sans-serif;
-            font-weight: 600;
-        }
-
-        .newsletter button:hover {
-            background-color: var(--rose-gold);
+        .newsletter input::placeholder {
+            color: #888;
         }
 
         .copyright {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #aaa;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
             font-size: 0.9rem;
             font-family: 'Raleway', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer background pattern */
+        footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         /* Responsive Styles */
@@ -792,6 +906,26 @@
             .social-signup {
                 flex-direction: column;
             }
+            
+            /* Footer responsive */
+            footer {
+                padding: 60px 0 25px;
+                margin-top: 70px;
+            }
+            
+            .footer-content {
+                gap: 40px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .social-icons a {
+                width: 36px;
+                height: 36px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -805,6 +939,74 @@
             
             .signup-image-content h2 {
                 font-size: 2rem;
+            }
+            
+            /* Footer responsive for small screens */
+            footer {
+                padding: 50px 0 20px;
+                margin-top: 60px;
+            }
+            
+            .footer-content {
+                gap: 35px;
+            }
+            
+            .footer-column h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .navbar {
+                padding: 10px 15px !important;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 30px;
+            }
+            
+            .nav-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+            
+            .nav-icons i {
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .signup-container {
+                margin: 0 15px;
+            }
+            
+            .signup-image, .signup-form {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 28px;
+            }
+            
+            .nav-icons {
+                gap: 10px;
+            }
+            
+            .signup-image, .signup-form {
+                padding: 20px;
             }
         }
     </style>
@@ -958,7 +1160,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="signup-button">Create Account</button>
+                    <button type="submit" class="btn btn-filled">Create Account</button>
                 </form>
                 
                 <div class="divider">
@@ -1251,6 +1453,33 @@
                 alert(`Redirecting to ${platform} authentication...`);
                 // In a real application, you would redirect to OAuth flow
             });
+        });
+
+        // Newsletter form submission
+        document.querySelector('.subscribe').addEventListener('click', function(e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter input');
+            const email = emailInput.value;
+            
+            if (email && email.includes('@')) {
+                emailInput.style.borderColor = '#28a745';
+                this.textContent = 'Subscribed!';
+                this.style.backgroundColor = '#28a745';
+                this.style.borderColor = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                    emailInput.style.borderColor = '';
+                    emailInput.value = '';
+                }, 2000);
+            } else {
+                emailInput.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    emailInput.style.borderColor = '';
+                }, 2000);
+            }
         });
     </script>
 </body>
